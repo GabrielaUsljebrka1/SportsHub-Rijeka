@@ -1,0 +1,13 @@
+{
+    "python-envs.pythonProjects": [
+        {
+            "path": ".",
+<<<<<<< HEAD
+            "envManager": "ms-python.python:venv",
+=======
+            "envManager": "ms-python.python:system",
+>>>>>>> 9799111f83725dd487bdcbd85dc033e3ff6d7980
+            "packageManager": "ms-python.python:pip"
+        }
+    ]
+}

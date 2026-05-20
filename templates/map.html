@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+<h1 class="title">Karta sportskih objekata u Rijeci</h1>
+
+<div class="filters">
+    <input type="text" id="searchInput" placeholder="Pretraži objekt...">
+
+    <select id="sportFilter">
+        <option value="all">Svi sportovi</option>
+    </select>
+
+    <span id="countText">0 objekata</span>
+</div>
+<div class="map-legend">
+
+    <div class="legend-item">
+        <span style="background:#22c55e"></span>
+        Nogomet
+    </div>
+
+    <div class="legend-item">
+        <span style="background:#f97316"></span>
+        Košarka
+    </div>
+
+    <div class="legend-item">
+        <span style="background:#eab308"></span>
+        Tenis
+    </div>
+
+    <div class="legend-item">
+        <span style="background:#0ea5e9"></span>
+        Plivanje
+    </div>
+
+    <div class="legend-item">
+        <span style="background:#8b5cf6"></span>
+        Teretana
+    </div>
+
+    <div class="legend-item">
+        <span style="background:#ef4444"></span>
+        Rukomet
+    </div>
+
+    <div class="legend-item">
+        <span style="background:#ec4899"></span>
+        Odbojka
+    </div>
+
+    <div class="legend-item">
+        <span style="background:#334155"></span>
+        Ostalo
+    </div>
+
+</div>
+<div class="map-wrapper">
+    <div id="map"></div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script id="venues-data" type="application/json">
+    {{ venues|tojson }}
+</script>
+
+<script>
+const venues = JSON.parse(document.getElementById("venues-data").textContent);
+
+const map = L.map("map").setView([45.3271, 14.4422], 13);
+
+L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: "&copy; OpenStreetMap"
+}).addTo(map);
+
+const markerLayer = L.layerGroup().addTo(map);
+
+const searchInput = document.getElementById("searchInput");
+const sportFilter = document.getElementById("sportFilter");
+const countText = document.getElementById("countText");
+
+const sportColors = {
+    soccer: "#22c55e",
+    football: "#22c55e",
+    basketball: "#f97316",
+    tennis: "#eab308",
+    swimming: "#0ea5e9",
+    swimming_pool: "#0ea5e9",
+    fitness: "#8b5cf6",
+    gym: "#8b5cf6",
+    handball: "#ef4444",
+    volleyball: "#ec4899",
+    athletics: "#f59e0b",
+    running: "#f59e0b",
+    table_tennis: "#14b8a6",
+    martial_arts: "#64748b",
+    default: "#334155"
+};
+
+function getMarkerIcon(sport) {
+    const color = sportColors[sport] || sportColors.default;
+
+    return L.divIcon({
+        className: "custom-map-marker",
+        html: `<span style="background:${color}"></span>`,
+        iconSize: [24, 24],
+        iconAnchor: [12, 12]
+    });
+}
+
+function fillSportFilter() {
+    const sports = {};
+
+    venues.forEach(venue => {
+        if (venue.sport && venue.sport_hr) {
+            sports[venue.sport] = venue.sport_hr;
+        }
+    });
+
+    Object.keys(sports).sort().forEach(sport => {
+        const option = document.createElement("option");
+        option.value = sport;
+        option.textContent = sports[sport];
+        sportFilter.appendChild(option);
+    });
+}
+
+function renderMap() {
+    markerLayer.clearLayers();
+
+    const selectedSport = sportFilter.value;
+    const searchText = searchInput.value.toLowerCase();
+
+    const filteredVenues = venues.filter(venue => {
+        const hasCoordinates = venue.lat && venue.lon;
+        const name = venue.name || "";
+        const matchesSport = selectedSport === "all" || venue.sport === selectedSport;
+        const matchesSearch = name.toLowerCase().includes(searchText);
+
+        return hasCoordinates && matchesSport && matchesSearch;
+    });
+
+    filteredVenues.forEach(venue => {
+        const googleMapsUrl = `https://www.google.com/maps?q=${venue.lat},${venue.lon}`;
+
+        L.marker([venue.lat, venue.lon], {
+            icon: getMarkerIcon(venue.sport)
+        })
+        .addTo(markerLayer)
+        .bindPopup(`
+            <div class="map-popup">
+                <h3>${venue.name}</h3>
+                <p><strong>Sport:</strong> ${venue.sport_hr || "Ostalo"}</p>
+                <p><strong>Izvor:</strong> ${venue.source || "OpenStreetMap"}</p>
+                <a href="${googleMapsUrl}" target="_blank">Otvori u Google Maps</a>
+            </div>
+        `);
+    });
+
+    countText.textContent = `${filteredVenues.length} objekata`;
+
+    if (filteredVenues.length > 0) {
+        const bounds = L.latLngBounds(filteredVenues.map(v => [v.lat, v.lon]));
+        map.fitBounds(bounds, { padding: [40, 40] });
+    }
+}
+
+fillSportFilter();
+renderMap();
+
+searchInput.addEventListener("input", renderMap);
+sportFilter.addEventListener("change", renderMap);
+</script>
+
+{% endblock %}

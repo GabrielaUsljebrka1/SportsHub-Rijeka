@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2 class="title">📰 Sportske vijesti</h2>
+
+<div class="filters">
+
+    <select id="sortFilter">
+        <option value="newest">Najnovije</option>
+        <option value="oldest">Najstarije</option>
+    </select>
+
+</div>
+
+<div class="news-grid" id="newsGrid">
+
+{% for n in news %}
+
+    <div class="news-card news-item" data-date="{{ n.timestamp }}">
+
+        {% if n.image %}
+
+        <img src="{{ n.image }}"
+            alt="{{ n.title }}"
+            class="news-image">
+
+        {% endif %}
+
+        <div class="news-source">
+            {{ n.source_name }}
+        </div>
+
+        <h3>{{ n.title }}</h3>
+
+        <div class="news-buttons">
+
+            <a href="{{ n.link }}"
+                target="_blank"
+                class="btn secondary">
+
+                🔗 Pročitaj više
+
+            </a>
+        
+        </div>
+
+    </div>
+
+{% endfor %}
+
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const filter = document.getElementById("sortFilter");
+        const grid = document.getElementById("newsGrid");
+
+        filter.addEventListener("change", sortNews);
+
+        function sortNews() {
+
+            const items = Array.from(document.querySelectorAll(".news-item"));
+
+            items.sort((a, b) => {
+
+                const dateA = parseInt(a.dataset.date);
+                const dateB = parseInt(b.dataset.date);
+
+                if (filter.value === "newest") {
+                    return dateB - dateA;
+                }
+
+                return dateA - dateB;
+            });
+
+            items.forEach(item => {
+                grid.appendChild(item);
+            });
+
+        }
+
+        sortNews();
+    });
+
+</script>
+
+{% endblock %}

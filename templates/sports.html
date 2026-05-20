@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2 class="title">Sportovi u Rijeci</h2>
+
+<div class="venues-grid">
+
+{% for s in sports %}
+
+<div class="venue-card">
+
+    <h3>{{ s.name }}</h3>
+
+    <p>
+        Broj objekata: <strong>{{ s.count }}</strong>
+    </p>
+
+    <div class="sport-section events">
+        <h4>🎯 Nadolazeći događaji:</h4>
+        {% if s.events %}
+            <ul>
+            {% for e in s.events %}
+                <li><strong>{{ e.title }}</strong> (📅 {{ e.date }})</li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>Nema nadolazećih događaja.</p>
+        {% endif %}
+    </div>
+
+    <div class="sport-section news">
+        <h4>📰 Najnovije vijesti:</h4>
+        {% if s.news %}
+            <ul>
+            {% for n in s.news %}
+                <li><a href="{{ n.link }}" target="_blank">{{ n.title }}</a></li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>Nema novih vijesti.</p>
+        {% endif %}
+    </div>
+
+    <a href="/venues?sport={{ s.raw }}" class="btn btn-block">
+        Pogledaj objekte
+    </a>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% endblock %}

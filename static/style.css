@@ -1,0 +1,619 @@
+:root {
+    --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    --nav-bg: rgba(255, 255, 255, 0.9);
+    --text-dark: #1e293b;
+    --white: #ffffff;
+    
+    /* Paleta za kartice */
+    --clr-objekti: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --clr-sportovi: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+    --clr-dogadjaji: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+    --clr-vijesti: linear-gradient(135deg, #5eeff5 0%, #4568dc 100%);
+    --clr-karta: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+}
+
+body {
+    margin: 0;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: var(--bg-gradient);
+    min-height: 100vh;
+    color: var(--text-dark);
+}
+
+
+
+.header::before {
+    background: linear-gradient(
+        rgba(0,0,0,0.25),
+        rgba(0,0,0,0.25)
+    );
+}
+.header {
+    background: url("https://images.unsplash.com/photo-1571993556897-57e0bcfbdf47?q=80&w=774&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")
+    center/cover no-repeat;
+    color: white;
+    padding: 120px 20px;
+    text-align: center;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+    backdrop-filter: blur(2px);
+}
+
+
+.header h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-shadow: 0 6px 20px rgba(0,0,0,0.6);
+    margin: 0;
+}
+
+
+/* NAVIGACIJA S GLASSMORPHISM EFEKTOM */
+.nav {
+    background: linear-gradient(-45deg, #2563eb, #22c55e, #f97316, #a855f7);
+    background-size: 400% 400%;
+    animation: navBG 10s ease infinite;
+    padding: 20px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+@keyframes navBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.nav a {
+    text-decoration: none;
+    color: var(--text-dark);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    padding: 8px 15px;
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+.nav a:hover {
+    background: #2563eb;
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* KARTICE U BOJI */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    padding: 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.card {
+    position: relative;
+    padding: 40px 30px;
+    border-radius: 25px;
+    color: white; 
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    border: none;
+}
+
+/* Specifične boje za svaku karticu koristeći nth-child */
+.card:nth-child(1) { background: var(--clr-objekti); }
+.card:nth-child(2) { background: var(--clr-sportovi); color: #444; } /* Svjetlija pa treba taman tekst */
+.card:nth-child(2) h3 { color: #444; }
+.card:nth-child(3) { background: var(--clr-dogadjaji); }
+.card:nth-child(4) { background: var(--clr-vijesti); }
+.card:nth-child(5) { background: var(--clr-karta); color: #333; }
+.card:nth-child(5) h3 { color: #333; }
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+.card h3 {
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+    color: white;
+}
+
+.card a {
+    display: inline-block;
+    margin-top: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    color: inherit;
+    padding: 10px 25px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255,255,255,0.3);
+    transition: 0.3s;
+}
+
+.card a:hover {
+    background: white;
+    color: #333 !important;
+}
+
+/* LISTE (VENUES, EVENTS, NEWS) */
+.item {
+    background: white;
+    margin-bottom: 20px;
+    padding: 25px;
+    border-radius: 20px;
+    border-left: 10px solid #2563eb;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    transition: 0.3s;
+}
+
+/* Različite boje rubova za liste */
+.item:nth-child(even) { border-left-color: var(--secondary-dark, #22c55e); }
+
+/* FILTERI */
+.filters {
+    background: rgba(255, 255, 255, 0.5);
+    padding: 25px;
+    margin: 20px 40px;
+    border-radius: 20px;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    border: 1px solid rgba(255,255,255,0.3);
+}
+
+select, input {
+    border: none;
+    padding: 12px 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    font-weight: 600;
+}
+
+/* Za venues */
+.venues-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 25px;
+    padding: 40px;
+}
+
+.venue-card {
+    background: white;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    transition: 0.3s;
+    border-left: 8px solid #2563eb;
+}
+
+.venue-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 18px 35px rgba(0,0,0,0.15);
+}
+
+.venue-card h3 {
+    margin-top: 0;
+    font-size: 1.4rem;
+    color: #1e293b;
+}
+
+.sport {
+    color: #64748b;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.venue-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    background: #2563eb;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background: #1d4ed8;
+}
+
+.btn.secondary {
+    background: #22c55e;
+}
+
+.btn.secondary:hover {
+    background: #16a34a;
+}
+
+/* za kartice u events */
+.event-card .btn {
+    display: inline-block;
+    margin-top: 15px;
+}
+
+/* Za news */
+.news-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 35px;
+    padding: 30px 40px 60px;
+}
+
+.news-card {
+    background: white;
+    border-radius: 28px;
+    padding: 35px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    border-top: 8px solid #2563eb;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 420px;
+}
+
+.news-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 18px 45px rgba(0,0,0,0.15);
+}
+
+.news-source {
+    display: inline-block;
+    background: linear-gradient(135deg, #2563eb, #60a5fa);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    margin-bottom: 15px;
+    font-weight: bold;
+    width: fit-content;
+}
+
+.news-card h3 {
+    font-size: 1.45rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    color: #0f172a;
+    min-height: 150px;
+}
+
+.news-image {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 18px;
+    margin-bottom: 20px;
+}
+
+/* EVENTS */
+
+.event-card {
+    background: rgba(255, 255, 255, 0.92);
+    border-radius: 24px;
+    padding: 30px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+    transition: all 0.35s ease;
+    position: relative;
+    overflow: hidden;
+    border-top: 8px solid #f97316;
+    backdrop-filter: blur(10px);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    min-height: 320px;
+}
+
+.event-card::before {
+    content: "";
+    position: absolute;
+    top: -60px;
+    right: -60px;
+    width: 140px;
+    height: 140px;
+    background: rgba(249, 115, 22, 0.08);
+    border-radius: 50%;
+}
+
+.event-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 45px rgba(0,0,0,0.14);
+}
+
+.event-card h3 {
+    font-size: 1.5rem;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    color: #0f172a;
+    position: relative;
+    z-index: 2;
+}
+
+.event-card p {
+    margin: 10px 0;
+    color: #475569;
+    font-size: 1rem;
+    position: relative;
+    z-index: 2;
+}
+
+.event-card strong {
+    color: #1e293b;
+}
+
+.event-card .btn {
+    margin-top: 25px;
+    align-self: flex-start;
+
+    background: linear-gradient(
+        135deg,
+        #f97316,
+        #fb923c
+    );
+
+    color: white;
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-weight: 700;
+    text-decoration: none;
+
+    transition: 0.3s;
+}
+
+.event-card .btn:hover {
+    transform: scale(1.05);
+    background: linear-gradient(
+        135deg,
+        #ea580c,
+        #f97316
+    );
+}
+
+/* Za SPORTS */
+
+/* =========================
+   SPORTS PAGE
+========================= */
+
+.title {
+    text-align: center;
+    font-size: 2.4rem;
+    margin: 30px 0 10px;
+    color: #1e293b;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+/* GRID */
+.venues-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    padding: 30px 50px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* CARD */
+.venue-card {
+    background: white;
+    border-radius: 18px;
+    padding: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    transition: all 0.25s ease;
+    border-left: 6px solid #2563eb;
+}
+
+.venue-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.15);
+}
+
+.venue-card h3 {
+    margin: 0 0 10px;
+    font-size: 1.4rem;
+    color: #0f172a;
+}
+
+.venue-card p {
+    margin: 0 0 12px;
+    color: #475569;
+    font-size: 0.95rem;
+}
+
+/* SECTIONS (EVENTS / NEWS) */
+.sport-section {
+    margin-top: 12px;
+    padding: 12px;
+    border-radius: 12px;
+    background: #f8fafc;
+}
+
+/* EVENTS */
+.sport-section.events {
+    border-left: 4px solid #f59e0b;
+}
+
+/* NEWS */
+.sport-section.news {
+    border-left: 4px solid #3b82f6;
+}
+
+.sport-section h4 {
+    margin: 0 0 8px;
+    font-size: 1rem;
+    color: #1e293b;
+}
+
+/* LISTS */
+.sport-section ul {
+    margin: 0;
+    padding-left: 18px;
+}
+
+.sport-section li {
+    margin-bottom: 6px;
+    font-size: 0.92rem;
+    color: #334155;
+}
+
+/* LINKS */
+.sport-section a {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.sport-section a:hover {
+    text-decoration: underline;
+}
+
+/* BUTTON */
+.btn {
+    display: inline-block;
+    margin-top: 14px;
+    padding: 10px 14px;
+    background: #2563eb;
+    color: white;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    text-align: center;
+    transition: 0.2s ease;
+}
+
+.btn:hover {
+    background: #1e40af;
+}
+
+/* FULL WIDTH BUTTON */
+.btn-block {
+    width: 100%;
+    display: block;
+}
+.map-wrapper {
+    max-width: 1300px;
+    margin: 0 auto 60px;
+    padding: 0 40px;
+}
+
+#map {
+    height: 650px;
+    width: 100%;
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.18);
+    border: 6px solid white;
+}
+
+#countText {
+    background: white;
+    color: #1e293b;
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-weight: 700;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.custom-map-marker span {
+    display: block;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 3px solid white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+.map-popup h3 {
+    margin: 0 0 8px;
+    color: #0f172a;
+}
+
+.map-popup p {
+    margin: 5px 0;
+}
+
+.map-popup a {
+    display: inline-block;
+    margin-top: 10px;
+    background: #2563eb;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.map-popup a:hover {
+    background: #1d4ed8;
+}
+
+@media(max-width: 768px) {
+    .map-wrapper {
+        padding: 0 20px;
+    }
+
+    #map {
+        height: 450px;
+    }
+
+    .filters {
+        flex-direction: column;
+        margin: 20px;
+    }
+}
+.map-legend {
+    max-width: 1300px;
+    margin: 20px auto;
+    padding: 0 40px;
+
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.legend-item {
+    background: white;
+    padding: 10px 16px;
+    border-radius: 12px;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    font-weight: 600;
+
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.legend-item span {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: block;
+}

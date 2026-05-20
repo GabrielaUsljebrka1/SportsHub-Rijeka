@@ -1,0 +1,178 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2 class="title">Sportski objekti</h2>
+
+<div class="filters">
+
+    <select id="sportFilter">
+
+        <option value="all"
+        {% if selected_sport == "all" %}selected{% endif %}>
+            Svi sportovi
+        </option>
+
+        <option value="soccer"
+        {% if selected_sport == "soccer" %}selected{% endif %}>
+            Nogomet
+        </option>
+
+        <option value="basketball"
+        {% if selected_sport == "basketball" %}selected{% endif %}>
+            Košarka
+        </option>
+
+        <option value="tennis"
+        {% if selected_sport == "tennis" %}selected{% endif %}>
+            Tenis
+        </option>
+
+        <option value="swimming"
+        {% if selected_sport == "swimming" %}selected{% endif %}>
+            Plivanje
+        </option>
+
+        <option value="fitness"
+        {% if selected_sport == "fitness" %}selected{% endif %}>
+            Fitness
+        </option>
+
+        <option value="handball"
+        {% if selected_sport == "handball" %}selected{% endif %}>
+            Rukomet
+        </option>
+
+        <option value="volleyball"
+        {% if selected_sport == "volleyball" %}selected{% endif %}>
+            Odbojka
+        </option>
+
+        <option value="table_tennis"
+        {% if selected_sport == "table_tennis" %}selected{% endif %}>
+            Stolni tenis
+        </option>
+
+        <option value="cycling"
+        {% if selected_sport == "cycling" %}selected{% endif %}>
+            Biciklizam
+        </option>
+
+        <option value="climbing"
+        {% if selected_sport == "climbing" %}selected{% endif %}>
+            Penjanje
+        </option>
+
+        <option value="futsal"
+        {% if selected_sport == "futsal" %}selected{% endif %}>
+            Futsal
+        </option>
+
+        <option value="athletics"
+        {% if selected_sport == "athletics" %}selected{% endif %}>
+            Atletika
+        </option>
+
+        <option value="running"
+        {% if selected_sport == "running" %}selected{% endif %}>
+            Trčanje
+        </option>
+
+        <option value="sailing"
+        {% if selected_sport == "sailing" %}selected{% endif %}>
+            Jedrenje
+        </option>
+
+        <option value="motor"
+        {% if selected_sport == "motor" %}selected{% endif %}>
+            Moto sport
+        </option>
+
+        <option value="scuba_diving"
+        {% if selected_sport == "scuba_diving" %}selected{% endif %}>
+            Ronjenje
+        </option>
+
+        <option value="paragliding"
+        {% if selected_sport == "paragliding" %}selected{% endif %}>
+            Paragliding
+        </option>
+
+        <option value="shooting"
+        {% if selected_sport == "shooting" %}selected{% endif %}>
+            Streljaštvo
+        </option>
+
+        <option value="yoga"
+        {% if selected_sport == "yoga" %}selected{% endif %}>
+            Yoga
+        </option>
+
+        <option value="beachvolleyball"
+        {% if selected_sport == "beachvolleyball" %}selected{% endif %}>
+            Odbojka na pijesku
+        </option>
+
+</select>
+
+</div>
+
+<div class="venues-grid">
+
+{% for v in venues %}
+
+<div class="venue-card venue-item" data-sport="{{ v.sport }}">
+
+    <h3>{{ v.name }}</h3>
+
+    <p class="sport">
+        {{ v.sport_hr }}
+    </p>
+
+    <div class="venue-buttons">
+
+        <a href="/map" class="btn">🗺 Pogledaj kartu</a>
+
+        <a 
+        href="https://www.google.com/maps?q={{ v.lat }},{{ v.lon }}"
+        target="_blank"
+        class="btn secondary">
+            📍 Lokacija
+        </a>
+
+    </div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const filter = document.getElementById("sportFilter");
+    const items = document.querySelectorAll(".venue-item");
+
+    filter.addEventListener("change", function () {
+
+        const value = this.value;
+
+        items.forEach(item => {
+
+            const sport = item.dataset.sport;
+
+            if (value === "all" || sport === value) {
+                item.style.display = "block";
+            } else {
+                item.style.display = "none";
+            }
+
+        });
+
+    });
+
+});
+</script>
+
+{% endblock %}

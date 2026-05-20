@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2 class="title">Sportski događaji</h2>
+
+<div class="venues-grid">
+
+{% for e in events %}
+
+<div class="event-card">
+
+    <div class="event-top">
+
+        <span class="event-sport">
+            {{ e.sport }}
+        </span>
+
+        <h3>{{ e.title }}</h3>
+
+    </div>
+
+    <div class="event-info">
+
+        <p>📅 <strong>Datum:</strong> {{ e.date }}</p>
+
+        <p>📍 <strong>Lokacija:</strong> {{ e.location }}</p>
+
+    </div>
+
+    <a href="{{ e.link }}"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn secondary">
+
+        🔎 Više informacija
+
+    </a>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% endblock %}

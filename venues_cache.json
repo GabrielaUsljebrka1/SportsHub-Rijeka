@@ -1,0 +1,342 @@
+[
+    {
+        "name": "Parajedriličarski klub Flumen",
+        "sport": "paragliding",
+        "sport_hr": "Paragliding",
+        "lat": 45.358535,
+        "lon": 14.3884012,
+        "address": "",
+        "website": "http://www.pjkflumen.org",
+        "source": "OpenStreetMap"
+    },
+    {
+        "name": "Tandem Paragliding",
+        "sport": "paragliding",
+        "sport_hr": "Paragliding",
+        "lat": 45.3585388,
+        "lon": 14.3884784,
+        "address": "Milice Jadranić",
+        "website": "http://www.paragliding-croatia.com/",
+        "source": "OpenStreetMap"
+    },
+    {
+        "name": "Boćarski klub Srdoči",
+        "sport": "boules",
+        "sport_hr": "Ostalo",
+        "lat": 45.3565291,
+        "lon": 14.3732539,
+        "address": "",
+        "website": "",
+        "source": "OpenStreetMap"
+    },
+    {
+        "name": "Sportski centar Balls",
+        "sport": "sports_centre",
+        "sport_hr": "Ostalo",
+        "lat": 45.3281183,
+        "lon": 14.4620109,
+        "address": "",
+        "website": "",
+        "source": "OpenStreetMap"
+    },
+    {
+        "name": "Plivački klub \"Kantrida\"",
+        "sport": "swimming",
+        "sport_hr": "Plivanje",
+        "lat": 45.3411619,
+        "lon": 14.3725896,
+        "address": "Podkoludricu",
+        "website": "https://pkkantrida.hr/",
+        "source": "OpenStreetMap"
+    },
+    {
+        "name": "Plivački klub \"Primorje EB\"",
+        "sport": "swimming",
+        "sport_hr": "Plivanje",
+        "lat": 45.3407601,
+        "lon": 14.3728585,
+        "address": "Podkoludricu",
+        "website": "https://pk-primorje.hr/",
+        "source": "OpenStreetMap"
+    },
+    {
+        "name": "Pomoćni stadion Kantrida",
+        "sport": "soccer",
+        "sport_hr": "Nogomet",
+        "lat": 45.3384396,
+        "lon": 14.3797071,
+        "address": "",
+        "website": "",
+        "source": "OpenStreetMap"
+    },
+    {
+        "name": "Stadion Kantrida",
+        "sport": "soccer",
+        "sport_hr": "Nogomet",
+        "lat": 45.3391726,
+        "lon": 14.3809683,
+        "address": "",
+        "website": "",
+        "source": "OpenStreetMap"
+    },
+    {
+        "name": "Stadion Kantrida",
+        "sport": "soccer",
+        "sport_hr": "Nogomet",
+        "lat": 45.3391754,
+        "lon": 14.3809365,
+        "address": "",
+        "website": "",
+        "source": "OpenStreetMap"
+    },
+    {
+        "name": "Dvorana mladosti",
+        "sport": "sports_centre",
+        "sport_hr": "Ostalo",
+        "lat": 45.3308335,
+        "lon": 14.4601017,
+        "address": "",
+        "website": "https://www.rijekasport.hr/hr/objekti/dvorana-mladosti/",
+        "source": "OpenStreetMap"
+    },
+    {
+        "name": "Stadion Krimeja",
+        "sport": "soccer",
+        "sport_hr": "Nogomet",
+        "lat": 45.3237209,
+        "lon": 14.4683597,
+        "address": "",
+        "website": "",
+        "source": "OpenStreetMap"
+    },
+    {
+        "name": "Omladinsko igralište",
+        "sport": "soccer",
+        "sport_hr": "Nogomet",
+        "lat": 45.3325581,
+        "lon": 14.4373619,
+        "address": "",
+        "website": "",
+        "source": "OpenStreetMap"
+    },
+    {
+        "name": "Tenis Klub Pećine",
+        "sport": "tennis",
+        "sport_hr": "Tenis",
+        "lat": 45.3206321,
+        "lon": 14.4618319,
+        "address": "",
+        "website": "",
+        "source": "OpenStreetMap"
+    },
+    {
+        "name": "Bazeni Kandrida",
+        "sport": "swimming",
+        "sport_hr": "Plivanje",
+        "lat": 45.3409743,
+        "lon": 14.3720783,
+        "address": "Podkoludricu",
+        "website": "",
+        "source": "OpenStreetMap"
+    },
+    {
+        "name": "Nogometno igralište \"Robert Komen\"",
+        "sport": "soccer",
+        "sport_hr": "Nogomet",
+        "lat": 45.3368964,
+        "lon": 14.4213798,
+        "address": "",
+        "website": "",
+        "source": "OpenStreetMap"
+    },
+    {
+        "name": "Campetto",
+        "sport": "basketball",
+        "sport_hr": "Košarka",
+        "lat": 45.3320125,
+        "lon": 14.4370451,
+        "address": "",
+        "website": "",
+        "source": "OpenStreetMap"
+    },
+    {
+        "name": "Campetto",
+        "sport": "handball",
+        "sport_hr": "Rukomet",
+        "lat": 45.3321967,
+        "lon": 14.436602,
+        "address": "",
+        "website": "",
+        "source": "OpenStreetMap"
+    },
+    {
+        "name": "Tenis klub Kvarner",
+        "sport": "tennis",
+        "sport_hr": "Tenis",
+        "lat": 45.3452327,
+        "lon": 14.3719947,
+        "address": "",
+        "website": "",
+        "source": "OpenStreetMap"
+    },
+    {
+        "name": "Streljana",
+        "sport": "shooting",
+        "sport_hr": "Streljaštvo",
+        "lat": 45.3493146,
+        "lon": 14.4370322,
+        "address": "",
+        "website": "",
+        "source": "OpenStreetMap"
+    },
+    {
+        "name": "Nafta",
+        "sport": "sports_centre",
+        "sport_hr": "Ostalo",
+        "lat": 45.3309033,
+        "lon": 14.4361354,
+        "address": "",
+        "website": "",
+        "source": "OpenStreetMap"
+    },
+    {
+        "name": "Igralište Delta",
+        "sport": "basketball",
+        "sport_hr": "Košarka",
+        "lat": 45.3238968,
+        "lon": 14.448728,
+        "address": "",
+        "website": "",
+        "source": "OpenStreetMap"
+    },
+    {
+        "name": "Sportski centar Zamet",
+        "sport": "sports_centre",
+        "sport_hr": "Ostalo",
+        "lat": 45.3443659,
+        "lon": 14.3840139,
+        "address": "",
+        "website": "",
+        "source": "OpenStreetMap"
+    },
+    {
+        "name": "Rujevica HNK Rijeka",
+        "sport": "soccer",
+        "sport_hr": "Nogomet",
+        "lat": 45.3478841,
+        "lon": 14.4022118,
+        "address": "",
+        "website": "",
+        "source": "OpenStreetMap"
+    },
+    {
+        "name": "Trening kamp Rujevica",
+        "sport": "soccer",
+        "sport_hr": "Nogomet",
+        "lat": 45.3469586,
+        "lon": 14.4016526,
+        "address": "",
+        "website": "",
+        "source": "OpenStreetMap"
+    },
+    {
+        "name": "Stadion Rujevica",
+        "sport": "soccer",
+        "sport_hr": "Nogomet",
+        "lat": 45.347936,
+        "lon": 14.4022265,
+        "address": "",
+        "website": "",
+        "source": "OpenStreetMap"
+    },
+    {
+        "name": "Sportsko-rekreacijski centar 3.Maj",
+        "sport": "sports_centre",
+        "sport_hr": "Ostalo",
+        "lat": 45.3374882,
+        "lon": 14.3876846,
+        "address": "",
+        "website": "https://www.rijekasport.hr/hr/objekti/src-3-maj",
+        "source": "OpenStreetMap"
+    },
+    {
+        "name": "Kartodrom Rijeka",
+        "sport": "karting",
+        "sport_hr": "Ostalo",
+        "lat": 45.3528616,
+        "lon": 14.3350536,
+        "address": "",
+        "website": "",
+        "source": "OpenStreetMap"
+    },
+    {
+        "name": "Sportsko igralište Draga",
+        "sport": "handball",
+        "sport_hr": "Rukomet",
+        "lat": 45.3218756,
+        "lon": 14.4982099,
+        "address": "",
+        "website": "",
+        "source": "OpenStreetMap"
+    },
+    {
+        "name": "Sportski centar Srdoči",
+        "sport": "soccer",
+        "sport_hr": "Nogomet",
+        "lat": 45.3578563,
+        "lon": 14.3649106,
+        "address": "Ul. Antuna Branka Šimića",
+        "website": "https://www.scsrdoci.com/",
+        "source": "OpenStreetMap"
+    },
+    {
+        "name": "Olimpijski bazen 2",
+        "sport": "swimming_pool",
+        "sport_hr": "Plivanje",
+        "lat": 45.3411713,
+        "lon": 14.3718451,
+        "address": "",
+        "website": "",
+        "source": "OpenStreetMap"
+    },
+    {
+        "name": "Bazen za skokove u vodu",
+        "sport": "swimming_pool",
+        "sport_hr": "Plivanje",
+        "lat": 45.341331,
+        "lon": 14.3712553,
+        "address": "",
+        "website": "",
+        "source": "OpenStreetMap"
+    },
+    {
+        "name": "Odbojkaško igralište",
+        "sport": "volleyball",
+        "sport_hr": "Odbojka",
+        "lat": 45.3384593,
+        "lon": 14.3785014,
+        "address": "",
+        "website": "",
+        "source": "OpenStreetMap"
+    },
+    {
+        "name": "Trening kamp Rujevica",
+        "sport": "soccer",
+        "sport_hr": "Nogomet",
+        "lat": 45.3475463,
+        "lon": 14.4019723,
+        "address": "",
+        "website": "",
+        "source": "OpenStreetMap"
+    },
+    {
+        "name": "Olimpijski bazen 1",
+        "sport": "swimming_pool",
+        "sport_hr": "Plivanje",
+        "lat": 45.3408448,
+        "lon": 14.372559,
+        "address": "",
+        "website": "",
+        "source": "OpenStreetMap"
+    }
+]
