@@ -327,6 +327,8 @@ def get_sports_news():
 def get_sports_data():
 
     venues = get_sports_venues()
+    events = get_sports_events()
+    news = get_sports_news()
 
     sports_count = {}
 
@@ -348,10 +350,24 @@ def get_sports_data():
 
     for raw_name, data in sports_count.items():
 
+        sport_name = data["name"]
+
+        sport_events = [
+            e for e in events
+            if e["sport"].lower() == sport_name.lower()
+        ]
+
+        sport_news = [
+            n for n in news
+            if sport_name.lower() in n["title"].lower()
+        ]
+
         sports.append({
-            "name": data["name"],
+            "name": sport_name,
             "count": data["count"],
-            "raw": raw_name
+            "raw": raw_name,
+            "events": sport_events[:3],
+            "news": sport_news[:3]
         })
 
     sports.sort(key=lambda x: x["count"], reverse=True)
