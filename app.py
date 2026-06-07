@@ -54,22 +54,22 @@ def events_page():
 
 @app.route("/sports")
 def sports_page():
-    # Tvoja originalna funkcija koja vraća [{'name': 'Nogomet', 'count': X, 'raw': 'soccer'}, ...]
+    
     sports_list = get_sports_data()
     all_events = get_sports_events()
     all_news = get_sports_news()
 
-    # Prolazimo kroz svaki sport i ručno mu lijepimo događaje i vijesti
+    
     for s in sports_list:
-        hr_name = s["name"].lower()  # npr. "nogomet"
+        hr_name = s["name"].lower()  
         
-        # Filtriramo događaje: tražimo piše li npr. "nogomet" u naslovu ili kategoriji
+        
         s["events"] = [
             e for e in all_events 
             if hr_name in e["sport"].lower() or hr_name in e["title"].lower()
         ][:2]  # Uzmi maksimalno 2
         
-        # Filtriramo vijesti: tražimo piše li npr. "nogomet" u naslovu vijesti
+        
         s["news"] = [
             n for n in all_news 
             if hr_name in n["title"].lower()
@@ -78,4 +78,4 @@ def sports_page():
     return render_template("sports.html", sports=sports_list)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()

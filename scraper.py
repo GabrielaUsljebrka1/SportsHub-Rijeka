@@ -81,6 +81,8 @@ def get_sports_venues():
       node["sport"](area.searchArea);
       way["sport"](area.searchArea);
       relation["sport"](area.searchArea);
+    
+
     );
 
     out center tags;
@@ -96,7 +98,10 @@ def get_sports_venues():
 
         response.raise_for_status()
         data = response.json()
-
+        for element in data.get("elements", []):
+            tags = element.get("tags", {})
+            if tags.get("name"):
+                print(tags.get("name"))
     except Exception as error:
         print("Greška kod dohvaćanja sportskih objekata:", error)
 
@@ -180,10 +185,10 @@ def get_sports_events():
             if not link.startswith("http"):
                 link = "https://www.dogadanja.com" + link
 
-        # --- DOHVAĆANJE DATUMA ---
+        #  DOHVAĆANJE DATUMA 
         date = "datum"
 
-        # 1. Pokušaj iz detaljne stranice (najtočnije - ISO format sa slike 1)
+        # 1. Pokušaj iz detaljne stranice 
         if link != "#":
             detail_date = get_event_date(link)
             if detail_date and detail_date != "datum":
@@ -199,7 +204,7 @@ def get_sports_events():
                 if date_tag:
                     date = date_tag.get_text(" ", strip=True)
                 else:
-                    # Dodatni fallback za tekstualni format sa slike 2 ("Datum: 13.6.2026.")
+                    # Dodatni fallback 
                     card_text = card.get_text(" ", strip=True)
                     if "Datum:" in card_text:
                         try:
