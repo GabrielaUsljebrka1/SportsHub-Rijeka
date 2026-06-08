@@ -41,11 +41,11 @@ def get_event_date(detail_url):
         time_tag = soup.select_one("time.event-single-date-primary")
 
         if time_tag:
-            # 1. najtočnije (ISO datum)
+            
             if time_tag.get("datetime"):
                 return time_tag["datetime"].split("T")[0]
 
-            # 2. fallback tekst
+            
             return time_tag.get_text(strip=True)
 
     except Exception as e:
@@ -188,13 +188,13 @@ def get_sports_events():
         #  DOHVAĆANJE DATUMA 
         date = "datum"
 
-        # 1. Pokušaj iz detaljne stranice 
+       
         if link != "#":
             detail_date = get_event_date(link)
             if detail_date and detail_date != "datum":
                 date = detail_date
 
-        # 2. Fallback iz same kartice ako detaljna stranica nije dostupna
+       
         if date == "datum":
             time_tag = card.find("time")
             if time_tag:
@@ -204,13 +204,13 @@ def get_sports_events():
                 if date_tag:
                     date = date_tag.get_text(" ", strip=True)
                 else:
-                    # Dodatni fallback 
+                    
                     card_text = card.get_text(" ", strip=True)
                     if "Datum:" in card_text:
                         try:
-                            # Izvlači sve nakon riječi "Datum:" do kraja te linije/rečenice
+                           
                             date_part = card_text.split("Datum:")[1].split("\n")[0].strip()
-                            # Čišćenje ako se uhvati previše teksta (npr. Lokacija)
+                            
                             if "Lokacija" in date_part:
                                 date_part = date_part.split("Lokacija")[0].strip()
                             if date_part:
@@ -218,7 +218,7 @@ def get_sports_events():
                         except Exception:
                             pass
 
-        # LOKACIJA
+       
         location = "Rijeka"
         location_tag = card.find(
             class_=lambda x: x and "location" in x.lower()
@@ -378,6 +378,3 @@ def get_sports_data():
     sports.sort(key=lambda x: x["count"], reverse=True)
 
     return sports
-
-
-#KARTA - MAP
