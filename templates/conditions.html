@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="conditions-page">
+
+    <div class="conditions-heading">
+        <span class="conditions-icon">🏃</span>
+        <div>
+            <h1>Uvjeti za trening u Rijeci</h1>
+            <p>Aktualni vremenski podaci za sportske aktivnosti na otvorenom</p>
+        </div>
+    </div>
+
+    {% if conditions.error %}
+
+        <div class="weather-error">
+            Trenutačno nije moguće dohvatiti vremenske podatke.
+            Pokušaj ponovno za nekoliko trenutaka.
+        </div>
+
+    {% else %}
+
+        <div class="conditions-grid">
+
+            <article class="condition-card temperature-card">
+                <div class="condition-emoji">🌡️</div>
+                <p class="condition-label">Temperatura</p>
+                <p class="condition-value">
+                    {{ conditions.temperature }}
+                    <span>°C</span>
+                </p>
+            </article>
+
+            <article class="condition-card feeling-card">
+                <div class="condition-emoji">🤸</div>
+                <p class="condition-label">Subjektivni osjećaj</p>
+                <p class="condition-value">
+                    {{ conditions.feels_like }}
+                    <span>°C</span>
+                </p>
+            </article>
+
+            <article class="condition-card wind-card">
+                <div class="condition-emoji">💨</div>
+                <p class="condition-label">Brzina vjetra</p>
+                <p class="condition-value">
+                    {{ conditions.wind }}
+                    <span>km/h</span>
+                </p>
+            </article>
+
+            <article class="condition-card rain-card">
+                <div class="condition-emoji">🌧️</div>
+                <p class="condition-label">Oborine</p>
+                <p class="condition-value">
+                    {{ conditions.precipitation }}
+                    <span>mm</span>
+                </p>
+            </article>
+
+        </div>
+
+        <div class="training-status {{ conditions.status }}">
+
+            {% if conditions.status == "good" %}
+                <span>✅</span>
+            {% elif conditions.status == "warning" %}
+                <span>⚠️</span>
+            {% else %}
+                <span>🌧️</span>
+            {% endif %}
+
+            <div>
+                <h2>Preporuka za trening</h2>
+                <p>{{ conditions.recommendation }}</p>
+            </div>
+
+        </div>
+
+        {% if conditions.updated %}
+            <p class="weather-updated">
+                Posljednje ažuriranje: {{ conditions.updated }}
+            </p>
+        {% endif %}
+
+    {% endif %}
+
+</section>
+
+{% endblock %}

@@ -6,150 +6,185 @@ import json
 import os
 import time
 
-OVERPASS_URL = "https://overpass-api.de/api/interpreter"
 
-SPORT_TRANSLATIONS = {
-    "soccer": "Nogomet",
-    "basketball": "Košarka",
-    "tennis": "Tenis",
-    "swimming": "Plivanje",
-    "swimming_pool": "Plivanje",
-    "fitness": "Fitness",
-    "handball": "Rukomet",
-    "volleyball": "Odbojka",
-    "table_tennis": "Stolni tenis",
-    "cycling": "Biciklizam",
-    "climbing": "Penjanje",
-    "futsal": "Futsal",
-    "athletics": "Atletika",
-    "running": "Trčanje",
-    "sailing": "Jedrenje",
-    "motor": "Moto sport",
-    "scuba_diving": "Ronjenje",
-    "paragliding": "Paragliding",
-    "shooting": "Streljaštvo",
-    "yoga": "Yoga",
-    "beachvolleyball": "Odbojka na pijesku"
-}
-
+# =========================================================
+# DATUM SPORTSKOG DOGAĐAJA
+# =========================================================
 
 def get_event_date(detail_url):
-    try:
-        r = requests.get(detail_url, headers={"User-Agent": "Mozilla/5.0"}, timeout=10)
-        soup = BeautifulSoup(r.text, "html.parser")
-
-        time_tag = soup.select_one("time.event-single-date-primary")
-
-        if time_tag:
-            
-            if time_tag.get("datetime"):
-                return time_tag["datetime"].split("T")[0]
-
-            
-            return time_tag.get_text(strip=True)
-
-    except Exception as e:
-        print("Date scrape error:", e)
-
-    return None
-
- #OBJEKTI - VENUES 
-def get_sports_venues():
-    cache_file = "venues_cache.json"
-    cache_duration = 60 * 60 * 24  # 24 sata
-
-    if os.path.exists(cache_file):
-        file_age = time.time() - os.path.getmtime(cache_file)
-
-        if file_age < cache_duration:
-            with open(cache_file, "r", encoding="utf-8") as file:
-                return json.load(file)
-
-    query = """
-    [out:json][timeout:25];
-    area["name"="Rijeka"]["boundary"="administrative"]->.searchArea;
-
-    (
-      node["leisure"~"sports_centre|pitch|stadium|swimming_pool"](area.searchArea);
-      way["leisure"~"sports_centre|pitch|stadium|swimming_pool"](area.searchArea);
-      relation["leisure"~"sports_centre|pitch|stadium|swimming_pool"](area.searchArea);
-
-      node["amenity"~"fitness_centre|swimming_pool"](area.searchArea);
-      way["amenity"~"fitness_centre|swimming_pool"](area.searchArea);
-      relation["amenity"~"fitness_centre|swimming_pool"](area.searchArea);
-
-      node["sport"](area.searchArea);
-      way["sport"](area.searchArea);
-      relation["sport"](area.searchArea);
-    
-
-    );
-
-    out center tags;
-    """
 
     try:
         response = requests.get(
-            OVERPASS_URL,
-            params={"data": query},
-            headers={"User-Agent": "SportsHubRijeka/1.0"},
-            timeout=30
+            detail_url,
+            headers={
+                "User-Agent": "Mozilla/5.0"
+            },
+            timeout=10
         )
 
         response.raise_for_status()
-        data = response.json()
-        for element in data.get("elements", []):
-            tags = element.get("tags", {})
-            if tags.get("name"):
-                print(tags.get("name"))
-    except Exception as error:
-        print("Greška kod dohvaćanja sportskih objekata:", error)
 
-        if os.path.exists(cache_file):
-            with open(cache_file, "r", encoding="utf-8") as file:
-                return json.load(file)
+        soup = BeautifulSoup(
+            response.text,
+            "html.parser"
+        )
+
+        time_tag = soup.select_one(
+            "time.event-single-date-primary"
+        )
+
+        if time_tag:
+
+            if time_tag.get("datetime"):
+
+                return time_tag["datetime"].split("T")[0]
+
+            return time_tag.get_text(strip=True)
+
+    except Exception as error:
+
+        print(
+            "Greška kod dohvaćanja datuma događaja:",
+            error
+        )
+
+    return None
+
+
+# =========================================================
+# SPORTSKI OBJEKTI
+# =========================================================
+
+def get_sports_venues():
+
+    try:
+        with open(
+            "venues_cache.json",
+            "r",
+            encoding="utf-8"
+        ) as file:
+
+            venues = json.load(file)
+
+        return venues
+
+    except Exception as error:
+
+        print(
+            "Greška kod učitavanja sportskih objekata:",
+            error
+        )
 
         return []
 
-    venues = []
 
-    for element in data.get("elements", []):
-        tags = element.get("tags", {})
+# =========================================================
+# VREMENSKI UVJETI ZA TRENING
+# =========================================================
 
-        name = tags.get("name")
-        if not name:
-            continue
+def get_training_conditions():
 
-        lat = element.get("lat") or element.get("center", {}).get("lat")
-        lon = element.get("lon") or element.get("center", {}).get("lon")
+    url = "https://api.open-meteo.com/v1/forecast"
 
-        if not lat or not lon:
-            continue
+    params = {
+        "latitude": 45.3271,
+        "longitude": 14.4422,
+        "current": (
+            "temperature_2m,"
+            "apparent_temperature,"
+            "wind_speed_10m,"
+            "precipitation"
+        ),
+        "timezone": "Europe/Zagreb"
+    }
 
-        sport = (
-            tags.get("sport")
-            or tags.get("leisure")
-            or tags.get("amenity")
-            or "unknown"
+    try:
+        response = requests.get(
+            url,
+            params=params,
+            timeout=10
         )
 
-        sport = str(sport).split(";")[0].lower()
+        response.raise_for_status()
 
-        venues.append({
-            "name": name,
-            "sport": sport,
-            "sport_hr": SPORT_TRANSLATIONS.get(sport, "Ostalo"),
-            "lat": lat,
-            "lon": lon,
-            "address": tags.get("addr:street", ""),
-            "website": tags.get("website", ""),
-            "source": "OpenStreetMap"
-        })
+        data = response.json()
+        current = data["current"]
 
-    with open(cache_file, "w", encoding="utf-8") as file:
-        json.dump(venues, file, ensure_ascii=False, indent=4)
+        temperature = current["temperature_2m"]
+        feels_like = current["apparent_temperature"]
+        wind = current["wind_speed_10m"]
+        precipitation = current["precipitation"]
 
-    return venues
+        if precipitation > 0:
+
+            recommendation = (
+                "Pada kiša – preporučuje se trening u dvorani"
+            )
+
+            status = "bad"
+
+        elif wind > 30:
+
+            recommendation = (
+                "Jak vjetar – potreban je oprez na otvorenom"
+            )
+
+            status = "warning"
+
+        elif temperature > 30:
+
+            recommendation = (
+                "Vrlo je toplo – treniraj lakše i pij dovoljno vode"
+            )
+
+            status = "warning"
+
+        elif temperature < 5:
+
+            recommendation = (
+                "Hladno je – dobro se zagrij prije treninga"
+            )
+
+            status = "warning"
+
+        else:
+
+            recommendation = (
+                "Dobri uvjeti za trening na otvorenom"
+            )
+
+            status = "good"
+
+        return {
+            "temperature": temperature,
+            "feels_like": feels_like,
+            "wind": wind,
+            "precipitation": precipitation,
+            "recommendation": recommendation,
+            "status": status,
+            "updated": current.get("time", ""),
+            "error": False
+        }
+
+    except Exception as error:
+
+        print(
+            "Greška kod dohvaćanja vremena:",
+            error
+        )
+
+        return {
+            "temperature": "--",
+            "feels_like": "--",
+            "wind": "--",
+            "precipitation": "--",
+            "recommendation": (
+                "Trenutačno nije moguće dohvatiti vremenske podatke"
+            ),
+            "status": "bad",
+            "updated": "",
+            "error": True
+        }
 # DOGAĐAJI - EVENTS
 
 EVENTS_URL = "https://www.dogadanja.com/sport/"
